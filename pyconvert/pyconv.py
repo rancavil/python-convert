@@ -37,8 +37,8 @@ def check_type(obj):
 def convertOBJ2STR(class_to_convert,type_to_convert):
 	""" function to convert an python object in a str or dict (with a representation of xml or json)
 		parameters:
-		class_to_convert, a python object to convert in a str
-		type_to_convert, a string with "xml" o "json" 
+			class_to_convert, a python object to convert in a str
+			type_to_convert, a string with "xml" o "json" 
 		returns:
 			if type_to_convert is equals to "xml" convert the object in a str with xml xml_document
 			if type_to_convert is equals to "json" convert the object in a dictionary with json document						
