@@ -23,8 +23,8 @@ except ImportError:
 
 distutils.core.setup(
 	name='pyconvert',
-	version = '0.1.alpha',
-	packages=['pyconvert'],
+	version = '0.2.alpha',
+	packages=['pyconvert','demos'],
 	author='Innovaser',
 	author_email='rancavil@innovaser.cl',
 )
