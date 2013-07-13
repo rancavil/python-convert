@@ -37,11 +37,11 @@ def check_type(obj):
 def convertOBJ2STR(class_to_convert,type_to_convert):
 	""" function to convert an python object in a str or dict (with a representation of xml or json)
 		parameters:  
-				class_to_convert, a python object to convert in a str
-				type_to_convert, a string with "xml" o "json" 
+			class_to_convert, a python object to convert in a str
+			type_to_convert, a string with "xml" o "json" 
 		returns:
-				if type_to_convert is equals to "xml" convert the object in a str with xml xml_document
-				if type_to_convert is equals to "json" convert the object in a dictionary with json document						
+			if type_to_convert is equals to "xml" convert the object in a str with xml xml_document
+			if type_to_convert is equals to "json" convert the object in a dictionary with json document						
 	"""
 	filter_attr = filter(lambda a: a not in dir(object) and inspect.ismethod(getattr(class_to_convert,a)) == False and a not in ("__doc__", "__module__","__dict__","__weakref__"),dir(class_to_convert))
 
@@ -93,9 +93,9 @@ def convertOBJ2STR(class_to_convert,type_to_convert):
 def convert2XML(class_to_convert):
 	""" function to convert an python object in a xml document
 		parameters:  
-				class_to_convert, a python object to convert in a xml document
+			class_to_convert, a python object to convert in a xml document
 		returns:
-				xml.dom.minidom.Document						
+			xml.dom.minidom.Document						
 	"""
 	data = convertOBJ2STR(class_to_convert,"xml")
 	return parseString(data)
@@ -103,9 +103,9 @@ def convert2XML(class_to_convert):
 def convert2JSON(class_to_convert):
 	""" function to convert an python object in a json document (dict)
 		parameters:  
-				class_to_convert, a python object to convert in a json document (python dictionary)
+			class_to_convert, a python object to convert in a json document (python dictionary)
 		returns:
-				dict						
+			dict						
 	"""
 	data = convertOBJ2STR(class_to_convert,"json")
 	return json.loads(json.dumps(data))
@@ -113,10 +113,10 @@ def convert2JSON(class_to_convert):
 def convertJSON2STR(name_doc, json_doc):
 	""" function to convert a python dict in a string (str) with the representation of xml document
 		parameters:  
-				name_doc, element root for the document
-				json_doc, a dictionary (dict) with the json document
+			name_doc, element root for the document
+			json_doc, a dictionary (dict) with the json document
 		returns:
-				str
+			str
 	"""
 	xml_doc = ""
 	if isinstance(json_doc,list):
@@ -149,10 +149,10 @@ def convertJSON2STR(name_doc, json_doc):
 def convertJSON2XML(name_doc, json_doc):
 	""" function to convert a python dict in a xml documento (xml.dom.minidom.Document)
 		parameters:  
-				name_doc, element root for the document
-				json_doc, a dictionary (dict) with the json document
+			name_doc, element root for the document
+			json_doc, a dictionary (dict) with the json document
 		returns:
-				xml.dom.minidom.Document
+			xml.dom.minidom.Document
 	"""
 	xml_document = convertJSON2STR(name_doc, json_doc)
 	return parseString(xml_document)
