@@ -18,6 +18,7 @@
 
 import inspect
 import json
+import pymongo
 from xml.dom.minidom import parseString
 
 def check_type(obj):
@@ -34,17 +35,16 @@ def check_type(obj):
 	elif isinstance(obj,str):
 		return True
 
-def convertOBJ2STR(class_to_convert,type_to_convert):
+def convert(class_to_convert,type_to_convert):
 	""" function to convert an python object in a str or dict (with a representation of xml or json)
 		parameters:
-			class_to_convert, a python object to convert in a str
+			class_to_convert, a python object to convert in a str or dict (python dictionary)
 			type_to_convert, a string with "xml" o "json" 
 		returns:
 			if type_to_convert is equals to "xml" convert the object in a str with xml xml_document
 			if type_to_convert is equals to "json" convert the object in a dictionary with json document						
 	"""
-	filter_attr = filter(lambda a: a not in dir(object) and inspect.ismethod(getattr(class_to_convert,a)) == False and a not in ("__doc__", "__module__","__dict__","__weakref__"),dir(class_to_convert))
-
+	filter_attr = class_to_convert.__dict__
 	data = None
 	class_name = class_to_convert.__class__.__name__	
 
@@ -53,18 +53,18 @@ def convertOBJ2STR(class_to_convert,type_to_convert):
 		for v in filter_attr:
 			d = getattr(class_to_convert,v)
 			if type(d).__name__ == "instance":
-				data += convertOBJ2STR(d,type_to_convert)
+				data += convert(d,type_to_convert)
 			elif isinstance(d,list):
 				data += "<"+v+"s>"
 				for a in d:
 					if not check_type(a):
-						data += convertOBJ2STR(a,type_to_convert)
+						data += convert(a,type_to_convert)
 					elif check_type(a):
-						data += "<"+v+">"+str(a)+"</"+v+">"
+						data += "<"+v+">"+unicode(a)+"</"+v+">"
 				data += "</"+v+"s>"
 			else:
 				data += "<"+v+">"
-				data += str(d)
+				data += unicode(d)
 				data += "</"+v+">"
 
 		data += "</"+class_name+">"
@@ -75,12 +75,12 @@ def convertOBJ2STR(class_to_convert,type_to_convert):
 		for v in filter_attr:
 			d = getattr(class_to_convert,v)
 			if type(d).__name__ == "instance":
-				data[v] = convertOBJ2STR(d,type_to_convert)
+				data[v] = convert(d,type_to_convert)
 			elif isinstance(d,list):
 				list_of_element = list()
 				for a in d:
 					if not check_type(a):
-						list_of_element.append(convertOBJ2STR(a,type_to_convert))
+						list_of_element.append(convert(a,type_to_convert))
 					elif check_type(a):
 						list_of_element.append(a)
 
@@ -97,7 +97,7 @@ def convert2XML(class_to_convert):
 		returns:
 			xml.dom.minidom.Document						
 	"""
-	data = convertOBJ2STR(class_to_convert,"xml")
+	data = convert(class_to_convert,"xml")
 	return parseString(data)
 
 def convert2JSON(class_to_convert):
@@ -107,52 +107,80 @@ def convert2JSON(class_to_convert):
 		returns:
 			dict						
 	"""
-	data = convertOBJ2STR(class_to_convert,"json")
+	data = convert(class_to_convert,"json")
 	return json.loads(json.dumps(data))
 
-def convertJSON2STR(name_doc, json_doc):
+def convertJSON2STR(root_element, json_doc):
 	""" function to convert a python dict in a string (str) with the representation of xml document
 		parameters:  
-			name_doc, element root for the document
+			root_element, element root for the document
 			json_doc, a dictionary (dict) with the json document
 		returns:
 			str
 	"""
 	xml_doc = ""
 	if isinstance(json_doc,list):
-		xml_doc += "<"+name_doc+"s>"
+		xml_doc += "<"+root_element+"s>\n"
 		for element in json_doc:
-			xml_doc += convertJSON2STR(name_doc,element)
-		xml_doc += "</"+name_doc+"s>"
+			xml_doc += convertJSON2STR(root_element,element)
+		xml_doc += "</"+root_element+"s>\n"
 		return xml_doc
 
-	xml_doc = "<"+name_doc+">"
+	xml_doc = "<"+root_element+">\n"
 	for key in json_doc.keys():
 		value = json_doc[key]
 		if isinstance(value,dict):
 			xml_doc += convertJSON2STR(key,value)
 		elif isinstance(value,list):
-			xml_doc += "<"+key+"s>"
+			xml_doc += "<"+key+"s>\n"
 			for v in value:
 				if isinstance(v,dict):
 					xml_doc += convertJSON2STR(key,v)
 				else:
-					xml_doc += "<"+key+">"+str(v)+"</"+key+">"
-			xml_doc += "</"+key+"s>"
+					xml_doc += "<"+key+">"+unicode(v)+"</"+key+">\n"
+			xml_doc += "</"+key+"s>\n"
 		else:
-			xml_doc += "<"+key+">"+str(value)+"</"+key+">"
+			xml_doc += "<"+key+">"+unicode(value)+"</"+key+">\n"
 
-	xml_doc += "</"+name_doc+">"
+	xml_doc += "</"+root_element+">\n"
 
 	return xml_doc
 
-def convertJSON2XML(name_doc, json_doc):
+def convertJSON2XML(root_element, json_doc):
 	""" function to convert a python dict in a xml documento (xml.dom.minidom.Document)
 		parameters:  
-			name_doc, element root for the document
+			root_element, element root for the document
 			json_doc, a dictionary (dict) with the json document
 		returns:
 			xml.dom.minidom.Document
 	"""
-	xml_document = convertJSON2STR(name_doc, json_doc)
-	return parseString(xml_document)
+	xml_document = convertJSON2STR(root_element, json_doc)
+	return parseString(xml_document.encode('ascii', 'xmlcharrefreplace').encode("utf-8").replace("\n","").replace("&",""))
+
+def convertMongo2XML(root_element, data):
+	""" function to convert a document or documents recovered from mongoDB in a xml document
+		parameters:  
+			root_element, element root for the document
+			data, a dictionary (dict) or a pymongo.cursor.Cursor with the json document
+		returns:
+			xml.dom.minidom.Document	
+	"""
+	if isinstance(data, pymongo.cursor.Cursor):
+		data_list = list(data)
+		return convertJSON2XML(root_element,data_list)
+	elif isinstance(data,dict):
+		return convertJSON2XML(root_element,data)
+	else:
+		return None
+
+def convertMongo2JSON(data):
+	""" function to convert a document or documents recovered from mongoDB in a json document
+		parameters:  
+			data, a dictionary (dict) or a pymongo.cursor.Cursor with the json document
+		returns:
+			json (python dictionary)
+	"""
+	if isinstance(data, pymongo.cursor.Cursor):
+		return list(data)
+	elif isinstance(data,dict):
+		return data
