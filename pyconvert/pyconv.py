@@ -181,6 +181,11 @@ def convertMongo2JSON(data):
 			json (python dictionary)
 	"""
 	if isinstance(data, pymongo.cursor.Cursor):
-		return list(data)
+		l = list()
+		for d in list(data):
+			d["_id"] = unicode(d["_id"])
+			l.append(d)
+		return l
 	elif isinstance(data,dict):
+		data["_id"] = unicode(data["_id"])
 		return data
