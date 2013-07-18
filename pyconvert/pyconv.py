@@ -20,6 +20,15 @@ import inspect
 import json
 import pymongo
 from xml.dom.minidom import parseString
+from bson.objectid import ObjectId
+
+class Encoder(json.JSONEncoder):
+	""" class to handle ObjectId on a json document """
+	def default(self,obj):
+		if isinstance(obj, ObjectId):
+			return unicode(obj)
+		else:
+			return obj
 
 def check_type(obj):
 	""" function check the data types 
@@ -183,9 +192,7 @@ def convertMongo2JSON(data):
 	if isinstance(data, pymongo.cursor.Cursor):
 		l = list()
 		for d in list(data):
-			d["_id"] = unicode(d["_id"])
-			l.append(d)
+			l.append(json.dumps(d, cls=Encoder))
 		return l
 	elif isinstance(data,dict):
-		data["_id"] = unicode(data["_id"])
-		return data
+		return json.dumps(data, cls=Encoder)
