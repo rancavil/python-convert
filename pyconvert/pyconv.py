@@ -192,7 +192,7 @@ def convertMongo2JSON(data):
 	if isinstance(data, pymongo.cursor.Cursor):
 		l = list()
 		for d in list(data):
-			l.append(json.dumps(d, cls=Encoder))
+			l.append(json.loads(json.dumps(d, cls=Encoder)))
 		return l
 	elif isinstance(data,dict):
-		return json.dumps(data, cls=Encoder)
+		return json.loads(json.dumps(data, cls=Encoder))
