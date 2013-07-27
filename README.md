@@ -91,7 +91,7 @@ The output must be:
      </Person>
 
 A little more complex example.
-==============================
+------------------------------
 Create a file called example_order.py
 
      #!/usr/bin/env python
