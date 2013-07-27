@@ -31,7 +31,7 @@ With pyconvert you can transform and serialize a python object in a xml or json 
 Examples:
 
 Convert a python object in a python dictionary (json).
-======================================================
+------------------------------------------------------
 Create the file example_json.py
 
      #!/usr/bin/env python
@@ -61,7 +61,7 @@ The output must be:
      age  : 30
 
 Convert a python object in a python xml.dom.minidom.Document (xml).
-===================================================================
+-------------------------------------------------------------------
 Create the file example_xml.py
 
      #!/usr/bin/env python
