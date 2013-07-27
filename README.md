@@ -30,8 +30,8 @@ With pyconvert you can transform and serialize a python object in a xml or json 
 
 Examples:
 
-1. Convert a python object in a python dictionary (json).
-
+Convert a python object in a python dictionary (json).
+======================================================
 Create the file example_json.py
 
      #!/usr/bin/env python
@@ -60,8 +60,8 @@ The output must be:
      name : Rodrigo
      age  : 30
 
-2. Convert a python object in a python xml.dom.minidom.Document (xml).
-
+Convert a python object in a python xml.dom.minidom.Document (xml).
+===================================================================
 Create the file example_xml.py
 
      #!/usr/bin/env python
@@ -90,8 +90,8 @@ The output must be:
           <name>Rodrigo</name>
      </Person>
 
-3. A little more complex example.
-
+A little more complex example.
+==============================
 Create a file called example_order.py
 
      #!/usr/bin/env python
