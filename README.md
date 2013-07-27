@@ -4,7 +4,7 @@ PyConvert
 Converts python objects in xml or json documents
 
 Installation
-============
+------------
 
 You must have installed python 2.7.
 
@@ -24,7 +24,7 @@ Or you can install it using.
      $ pip install pyconvert
 
 Example
-=======
+-------
 
 With pyconvert you can transform and serialize a python object in a xml or json document.
 
