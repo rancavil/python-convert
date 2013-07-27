@@ -93,7 +93,7 @@ def convert(class_to_convert,type_to_convert):
 					elif check_type(a):
 						list_of_element.append(a)
 
-					data[v+"s"] = list_of_element
+				data[v+"s"] = list_of_element
 			else:
 				data[v] = d
 
