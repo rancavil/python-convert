@@ -123,6 +123,7 @@ Create a file called example_order.py
      print json_doc
      print
      xml_doc = pyconvert.pyconv.convert2XML(order)
+     print xml_doc.toprettyxml()
 
 Save and execute the example:
 
