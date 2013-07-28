@@ -61,7 +61,7 @@ def convert(class_to_convert,type_to_convert):
 		data = "<"+class_name+">"
 		for v in filter_attr:
 			d = getattr(class_to_convert,v)
-			if type(d).__name__ == "instance":
+			if not check_type(d) and not isinstance(d,list):
 				data += convert(d,type_to_convert)
 			elif isinstance(d,list):
 				data += "<"+v+"s>"
@@ -83,7 +83,7 @@ def convert(class_to_convert,type_to_convert):
 		data = dict()
 		for v in filter_attr:
 			d = getattr(class_to_convert,v)
-			if type(d).__name__ == "instance":
+			if not check_type(d) and not isinstance(d,list):
 				data[v] = convert(d,type_to_convert)
 			elif isinstance(d,list):
 				list_of_element = list()
