@@ -151,3 +151,85 @@ The output must be:
 	    </books>
         <number>331</number>
      </Order>
+
+Create a file called example_music.py
+
+     #!/usr/bin/env python
+     
+     import pyconvert.pyconv
+     
+     class Band(object):
+        name_band = str
+        year_band = int
+
+     class Album(object):
+        band_album = Band
+        name_album = str
+        year_album = int
+        song = [str]
+
+     band = Band()
+     band.name_band = "Led Zeppelin"
+     band.year_band = 1968
+     
+     album = Album()
+     album.band_album = band
+     album.name_album = "House of Holy"
+     album.year_album = 1973
+     album.song = list()
+     album.song.append("The Song Remains the Same")
+     album.song.append("The Rain Song")
+     album.song.append("Over the Hills and Far Away")
+     album.song.append("The Crunge")
+     album.song.append("Dancing Days")
+     album.song.append("D'yer Mak'er")
+     album.song.append("No Quarter")
+     album.song.append("The Ocean")
+
+     print
+     json_doc = pyconvert.pyconv.convert2JSON(album)
+     print json_doc
+     print
+     xml_doc = pyconvert.pyconv.convert2XML(album)
+     print xml_doc.toprettyxml()
+
+Save and execute the program:
+
+     $ python example_music.py
+
+You must see the next output.
+
+     {u'year_album': 1973, 
+      u'name_album': u'House of Holy', 
+      u'songs': [
+           u'The Song Remains the Same', 
+           u'The Rain Song', 
+           u'Over the Hills and Far Away', 
+           u'The Crunge', 
+           u'Dancing Days', 
+           u"D'yer Mak'er", 
+           u'No Quarter', 
+           u'The Ocean'], 
+     u'band_album': {u'name_band': u'Led Zeppelin', 
+                     u'year_band': 1968}
+     }
+
+     <?xml version="1.0" ?>
+     <Album>
+          <year_album>1973</year_album>
+             <songs>
+                <song>The Song Remains the Same</song>
+                <song>The Rain Song</song>
+                <song>Over the Hills and Far Away</song>
+                <song>The Crunge</song>
+                <song>Dancing Days</song>
+                <song>D'yer Mak'er</song>
+                <song>No Quarter</song>
+                <song>The Ocean</song>
+             </songs>
+          <name_album>House of Holy</name_album>
+          <Band>
+                <name_band>Led Zeppelin</name_band>
+                <year_band>1968</year_band>
+          </Band>
+      </Album>
