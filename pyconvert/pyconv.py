@@ -18,7 +18,6 @@
 
 import inspect
 import json
-import pymongo
 from xml.dom.minidom import parseString
 from bson.objectid import ObjectId
 
@@ -174,6 +173,11 @@ def convertMongo2XML(root_element, data):
 		returns:
 			xml.dom.minidom.Document	
 	"""
+	try:
+		import pymongo
+	except ImportError:
+		raise Exception("You must install pymongo")
+
 	if isinstance(data, pymongo.cursor.Cursor):
 		data_list = list(data)
 		return convertJSON2XML(root_element,data_list)
@@ -189,6 +193,11 @@ def convertMongo2JSON(data):
 		returns:
 			json (python dictionary)
 	"""
+	try:
+		import pymongo
+	except ImportError:
+		raise Exception("You must install pymongo")
+
 	if isinstance(data, pymongo.cursor.Cursor):
 		l = list()
 		for d in list(data):
