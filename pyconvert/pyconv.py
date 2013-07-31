@@ -19,11 +19,15 @@
 import inspect
 import json
 from xml.dom.minidom import parseString
-from bson.objectid import ObjectId
 
 class Encoder(json.JSONEncoder):
 	""" class to handle ObjectId on a json document """
 	def default(self,obj):
+		try:
+			from bson.objectid import ObjectId
+		except ImportError:
+			raise Exception("You must have bson installed")
+
 		if isinstance(obj, ObjectId):
 			return unicode(obj)
 		else:
