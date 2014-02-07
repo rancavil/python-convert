@@ -1,5 +1,5 @@
 *.pyc
-/dist/
-/pyconvert.egg-info/
-/venv/
-/build/
+dist/
+pyconvert.egg-info/
+venv/
+build/
