@@ -255,12 +255,13 @@ def convertXML2OBJ(cls, xml):
                 attr_type = cls.__dict__[attr]
                 xml_value = xml.getElementsByTagName(attr)
                 if len(xml_value)>0:
-                        if attr_type not in [int, float, long, str] and not hasattr(attr_type,'__module__'):
-                                for e in xml_value:
-                                        l = []
-                                        for xelem in xml.getElementsByTagName(attr_type[0].__name__):
-                                                l.append(convertXML2OBJ(attr_type[0],xelem))
-                                        cls_dict[attr] = l
+			if isinstance(attr_type,list) and attr_type[0] in [int, float, long, str]:
+				cls_dict[attr] = [x.childNodes[0].nodeValue for x in xml_value[0].childNodes if x.nodeType == x.ELEMENT_NODE]
+                        elif attr_type not in [int, float, long, str] and not hasattr(attr_type,'__module__'):
+                                l = []
+                                for xelem in xml.getElementsByTagName(attr_type[0].__name__):
+                                	l.append(convertXML2OBJ(attr_type[0],xelem))
+                                cls_dict[attr] = l
                         elif attr_type not in [int, float, long, str] and hasattr(attr_type,'__module__'):
                                 cls_dict[attr] = convertXML2OBJ(attr_type,xml_value[0])
                         else:
