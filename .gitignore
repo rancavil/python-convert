@@ -1,4 +1,5 @@
 *.pyc
+*.zip
 dist/
 pyconvert.egg-info/
 venv/
