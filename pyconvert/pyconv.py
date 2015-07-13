@@ -46,6 +46,8 @@ def check_type(obj):
 		return True
 	elif isinstance(obj,str):
 		return True
+	elif isinstance(obj,unicode):
+		return True
 
 def convert(class_to_convert,type_to_convert):
 	""" function to convert an python object in a str or dict (with a representation of xml or json)
@@ -268,12 +270,26 @@ def convertXML2OBJ(cls, xml):
 				type_conv = cls.__dict__[attr]
                                 cls_dict[attr] = type_conv(getValue(xml_value))
 
-        return type(cls.__name__,(object,) ,cls_dict)
+	c = cls()
+	c.__dict__ = cls_dict
+        return c
 
-def convertJSON2OBJ(json_doc):
+def convertJSON2OBJ(cls, json_doc):
 	""" function that convert an json in a python object
 		parameters:
+			cls, is the class that represents to the json.
 			doc, is the json documment
+
+			example:
+				class Person:
+					name = str
+					age = int
+
+				{
+					"name" : "Steve"
+					"age"  : 41
+				}
+
 		returns:
 			python oject
 	"""
@@ -296,5 +312,6 @@ def convertJSON2OBJ(json_doc):
                                         b = convertJSON2OBJ(a)
                                         l.append(b)
                                 attrs[key] = l
-
-                return type('jsonobj', (object,),attrs)
+		c = cls()
+		c.__dict__ = attrs
+		return c
