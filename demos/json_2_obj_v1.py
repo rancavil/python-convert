@@ -3,7 +3,16 @@ import json
 
 doc = {'userid':10010, 'username':'homerJ', 'projects' : [ {"seq" : 1, "name" : "API Develop"}, {"seq": 2, "name" : "Java Apps"}]}
 
-c = convertJSON2OBJ(doc)
+class Project(object):
+	seq = int
+	name = str
+
+class User(object):
+	userid = int
+	username = str
+	projects = [Project]
+
+c = convertJSON2OBJ(User,doc)
 print "JSON original"
 print "*************"
 print json.dumps(doc, sort_keys=True, indent=2, separators=(',',': '))

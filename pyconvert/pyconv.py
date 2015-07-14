@@ -229,10 +229,10 @@ def convertMongo2JSON(data):
 def getValue(e):
 	""" function that returns the value of a text node from xml element
 	"""
-        if e[0].childNodes[0].nodeType == e[0].TEXT_NODE:
-                return e[0].childNodes[0].nodeValue
-        else:
-                return e
+	if e[0].childNodes[0].nodeType == e[0].TEXT_NODE:
+		return e[0].childNodes[0].nodeValue
+	else:
+		return e
 
 def convertXML2OBJ(cls, xml):
 	""" function to convert xml to python object
@@ -252,27 +252,27 @@ def convertXML2OBJ(cls, xml):
 		returns:
 			python object
 	"""
-        cls_dict = {}
-        for attr in filter(lambda x : x not in dir(object),dir(cls)):
-                attr_type = cls.__dict__[attr]
-                xml_value = xml.getElementsByTagName(attr)
-                if len(xml_value)>0:
+	cls_dict = {}
+	for attr in filter(lambda x : x not in dir(object),dir(cls)):
+		attr_type = cls.__dict__[attr]
+		xml_value = xml.getElementsByTagName(attr)
+		if len(xml_value)>0:
 			if isinstance(attr_type,list) and attr_type[0] in [int, float, long, str]:
 				cls_dict[attr] = [x.childNodes[0].nodeValue for x in xml_value[0].childNodes if x.nodeType == x.ELEMENT_NODE]
-                        elif attr_type not in [int, float, long, str] and not hasattr(attr_type,'__module__'):
-                                l = []
-                                for xelem in xml.getElementsByTagName(attr_type[0].__name__):
-                                	l.append(convertXML2OBJ(attr_type[0],xelem))
-                                cls_dict[attr] = l
-                        elif attr_type not in [int, float, long, str] and hasattr(attr_type,'__module__'):
-                                cls_dict[attr] = convertXML2OBJ(attr_type,xml_value[0])
-                        else:
+			elif attr_type not in [int, float, long, str] and not hasattr(attr_type,'__module__'):
+				l = []
+				for xelem in xml.getElementsByTagName(attr_type[0].__name__):
+					l.append(convertXML2OBJ(attr_type[0],xelem))
+				cls_dict[attr] = l
+			elif attr_type not in [int, float, long, str] and hasattr(attr_type,'__module__'):
+				cls_dict[attr] = convertXML2OBJ(attr_type,xml_value[0])
+			else:
 				type_conv = cls.__dict__[attr]
-                                cls_dict[attr] = type_conv(getValue(xml_value))
+				cls_dict[attr] = type_conv(getValue(xml_value))
 
 	c = cls()
 	c.__dict__ = cls_dict
-        return c
+	return c
 
 def convertJSON2OBJ(cls, json_doc):
 	""" function that convert an json in a python object
@@ -293,25 +293,27 @@ def convertJSON2OBJ(cls, json_doc):
 		returns:
 			python oject
 	"""
-        attrs = {}
-        if isinstance(json_doc,list):
-                l = []
-                for a in json_doc:
-                        b = convertJSON2OBJ(a)
-                        l.append(b)
-                return l
-        else:
-                for key in json_doc.keys():
-                        value = json_doc[key]
-                        if not isinstance(value,list):
+	attrs = {}
+	if isinstance(json_doc,list):
+		l = []
+		for a in json_doc:
+			b = convertJSON2OBJ(cls, a)
+			l.append(b)
+		return l
+	else:
+		for key in json_doc.keys():
+			value = json_doc[key]
+			if not isinstance(value,list) and not isinstance(value,dict):
 				type_conv = type(value)
-                                attrs[key] = type_conv(value)
-                        else:
-                                l = []
-                                for a in value:
-                                        b = convertJSON2OBJ(a)
-                                        l.append(b)
-                                attrs[key] = l
+				attrs[key] = type_conv(value)
+			elif isinstance(value,dict) and not isinstance(cls.__dict__[key],list):
+				attrs[key] = convertJSON2OBJ(cls.__dict__[key],value)
+			else:
+				l = []
+				for a in value:
+					b = convertJSON2OBJ(cls.__dict__[key][0], a)
+					l.append(b)
+				attrs[key] = l
 		c = cls()
 		c.__dict__ = attrs
 		return c
