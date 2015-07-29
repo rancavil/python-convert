@@ -6,7 +6,7 @@ Converts python objects in xml or json documents, and viceversa.
 Installation
 ------------
 
-You must have installed python 2.7.
+You must have installed python 2.7 or 3.3+.
 
 Download the api from github (https://github.com/rancavil/python-convert/archive/master.zip).
 
@@ -46,9 +46,9 @@ Create the file example_json.py
      p = Person("Rodrigo",30)
 
      json_person = pyconvert.pyconv.convert2JSON(p)
-     print json_person
-     print "name : %s"%json_person['name']
-     print "age  : %d"%json_person['age']
+     print(json_person)
+     print("name : %s"%json_person['name'])
+     print("age  : %d"%json_person['age'])
 
 This example convert a python object Person in a python dict (json document).
 
@@ -76,7 +76,7 @@ Create the file example_xml.py
      p = Person("Rodrigo",30)
 
      xml_person = pyconvert.pyconv.convert2XML(p)
-     print xml_person.toprettyxml()
+     print(xml_person.toprettyxml())
 
 This example convert a python object Person in a python xml.dom.minidom.Document.
 
@@ -118,12 +118,12 @@ Create a file called example_order.py
      order.number = 331
      order.book = [b1,b2]
 
-     print
+     print("\n")
      json_doc = pyconvert.pyconv.convert2JSON(order)
-     print json_doc
-     print
+     print(json_doc)
+     print("\n")
      xml_doc = pyconvert.pyconv.convert2XML(order)
-     print xml_doc.toprettyxml()
+     print(xml_doc.toprettyxml())
 
 Save and execute the example:
 
@@ -186,12 +186,12 @@ Create a file called example_music.py
      album.song.append("No Quarter")
      album.song.append("The Ocean")
 
-     print
+     print("")
      json_doc = pyconvert.pyconv.convert2JSON(album)
-     print json_doc
-     print
+     print(json_doc)
+     print("")
      xml_doc = pyconvert.pyconv.convert2XML(album)
-     print xml_doc.toprettyxml()
+     print(xml_doc.toprettyxml())
 
 Save and execute the program:
 
@@ -264,12 +264,12 @@ This example converts an xml document in a Python Object.
      xml = parseString(xmlDoc)
      obj = convertXML2OBJ(Book,xml.documentElement)
 
-     print "isbn     : %ld "%obj.isbn
-     print "language : %s  "%obj.language
-     print "title    : %s  "%obj.title
-     print "url      : %s  "%obj.url
-     print "Authors"
+     print("isbn     : %ld "%obj.isbn)
+     print("language : %s  "%obj.language)
+     print("title    : %s  "%obj.title)
+     print("url      : %s  "%obj.url)
+     print("Authors")
      for author in obj.authors:
-          print "\t %s "%author
+          print("\t %s "%author)
 
 
