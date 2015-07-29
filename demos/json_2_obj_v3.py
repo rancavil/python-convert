@@ -26,15 +26,15 @@ class User(object):
 	age = int
 
 users = convertJSON2OBJ(User,doc)
-print "JSON original"
-print "*************"
-print json.dumps(doc, sort_keys=True, indent=2, separators=(',',': '))
-print
-print "Python obj     "
-print "***************"
-print "Users          "
-print "---------------"
+print("JSON original")
+print("*************")
+print(json.dumps(doc, sort_keys=True, indent=2, separators=(',',': ')))
+print("")
+print("Python obj     ")
+print("***************")
+print("Users          ")
+print("---------------")
 for user in users:
-	print "\tuser.username : %s "%user.username
-	print "\tuser.age      : %s "%user.age
-	print
+	print("\tuser.username : %s "%user.username)
+	print("\tuser.age      : %s "%user.age)
+	print("")

@@ -33,7 +33,7 @@ xmlDoc = """
 """
 
 class Book(object):
-	isbn = long
+	isbn = int
 	language = str
 	title = str
 	authors = [str]
@@ -42,17 +42,17 @@ class Book(object):
 xml = parseString(xmlDoc)
 obj = convertXML2OBJ(Book,xml.documentElement)
 
-print "XML original"
-print "************"
-print xml.toxml()
-print
-print "Python Object"
-print "*************" 
-print "isbn     : %ld "%obj.isbn
-print "language : %s  "%obj.language
-print "title    : %s  "%obj.title
-print "url      : %s  "%obj.url
-print "Authors"
+print("XML original")
+print("************")
+print(xml.toxml())
+print("")
+print("Python Object")
+print("*************")
+print("isbn     : %ld "%obj.isbn)
+print("language : %s  "%obj.language)
+print("title    : %s  "%obj.title)
+print("url      : %s  "%obj.url)
+print("Authors")
 for author in obj.authors:
-	print "\t %s "%author
-print
+	print("\t %s "%author)
+	print("")

@@ -34,11 +34,11 @@ xml_doc = parseString(person_xml)
 
 person_obj = convertXML2OBJ(Person, xml_doc)
 
-print "XML original"
-print "============"
-print xml_doc.toprettyxml()
-print 
-print "Python object"
-print "============="
-print "person_obj.name = %s"%person_obj.name
-print "person_obj.age  = %d"%person_obj.age
+print("XML original")
+print("============")
+print(xml_doc.toprettyxml())
+print("")
+print("Python object")
+print("=============")
+print("person_obj.name = %s"%person_obj.name)
+print("person_obj.age  = %d"%person_obj.age)

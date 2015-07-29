@@ -31,20 +31,20 @@ class User(object):
 	projects = [Project]
 
 c = convertJSON2OBJ(User,doc)
-print "JSON original"
-print "*************"
-print json.dumps(doc, sort_keys=True, indent=2, separators=(',',': '))
-print
-print "Python obj     "
-print "***************"
-print "User data      "
-print "---------------"
-print "userid   : %d "%c.userid
-print "username : %s "%c.username
-print
-print "User's projects"
-print "---------------"
+print("JSON original")
+print("*************")
+print(json.dumps(doc, sort_keys=True, indent=2, separators=(',',': ')))
+print("")
+print("Python obj     ")
+print("***************")
+print("User data      ")
+print("---------------")
+print("userid   : %d "%c.userid)
+print("username : %s "%c.username)
+print("")
+print("User's projects")
+print("---------------")
 for project in c.projects:
-	print "\tprojects.seq  : %d "%project.seq 
-	print "\tprojects.name : %s "%project.name
-	print
+	print("\tprojects.seq  : %d "%project.seq)
+	print("\tprojects.name : %s "%project.name)
+	print("")

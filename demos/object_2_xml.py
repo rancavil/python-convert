@@ -36,17 +36,17 @@ class Person(object):
 
 person = Person("Steve",25)
 
-print
-print 'Object python Person'
-print '======================================='
-print ' person = Person("Steve",25) '
-print ' person.name = %s'%person.getName()
-print ' person.age  = %d'%person.getAge()
-print '======================================='
-print
-print 'XML Document (xml.dom.minidom,Document)'
-print '======================================='
-print
+print('')
+print('Object python Person')
+print('=======================================')
+print(' person = Person("Steve",25) ')
+print(' person.name = %s'%person.getName())
+print(' person.age  = %d'%person.getAge())
+print('=======================================')
+print('')
+print('XML Document (xml.dom.minidom,Document)')
+print('=======================================')
+print('')
 xml_doc = pyconvert.pyconv.convert2XML(person)
-print xml_doc.toprettyxml()
-print '======================================='
+print(xml_doc.toprettyxml())
+print('=======================================')

@@ -53,20 +53,20 @@ if __name__ == '__main__':
 	xml = parseString(doc)
 	c = convertXML2OBJ(Music,xml.documentElement)
 
-	print "XML original"
-	print "************"
-	print xml.toxml()
-	print 
-	print "Python OBJ"
-	print "*************"
-	print "Band                    "
-	print "------------------------"
-	print "Name  : %s"%c.Band.name
-	print "Genre : %s"%c.Band.genre
-	print
-	print "Albums                  "
-	print "------------------------"
+	print("XML original")
+	print("************")
+	print(xml.toxml())
+	print("")
+	print("Python OBJ")
+	print("*************")
+	print("Band                    ")
+	print("------------------------")
+	print("Name  : %s"%c.Band.name)
+	print("Genre : %s"%c.Band.genre)
+	print("")
+	print("Albums                  ")
+	print("------------------------")
 	for a in c.Albums:
-		print "\tAlbum name : %s"%a.name
-		print "\tYear       : %d"%a.year
-		print
+		print("\tAlbum name : %s"%a.name)
+		print("\tYear       : %d"%a.year)
+		print("")

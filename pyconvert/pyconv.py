@@ -20,6 +20,12 @@ import inspect
 import json
 from xml.dom.minidom import parseString
 
+import sys
+
+if sys.version_info > (3,):
+	long = int
+
+
 class Encoder(json.JSONEncoder):
 	""" class to handle ObjectId on a json document """
 	def default(self,obj):

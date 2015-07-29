@@ -36,18 +36,18 @@ class Person(object):
 
 person = Person("Steve",25)
 
-print
-print 'Object python Person'
-print '======================================'
-print ' person = Person("Steve",25) '
-print ' person.name = %s'%person.getName()
-print ' person.age  = %d'%person.getAge()
-print '======================================'
-print
-print 'JSON Document (python dictionary)     '
-print '======================================'
-print
+print('')
+print('Object python Person')
+print('======================================')
+print(' person = Person("Steve",25) ')
+print(' person.name = %s'%person.getName())
+print(' person.age  = %d'%person.getAge())
+print('======================================')
+print('')
+print('JSON Document (python dictionary)     ')
+print('======================================')
+print('')
 json_doc = pyconvert.pyconv.convert2JSON(person)
-print json_doc
-print
-print '======================================'
+print(json_doc)
+print('')
+print('======================================')

@@ -32,23 +32,23 @@ class Message(object):
 	receiver = User
 
 c = convertJSON2OBJ(Message,doc)
-print "JSON original"
-print "*************"
-print json.dumps(doc, sort_keys=True, indent=2, separators=(',',': '))
-print
-print "Python obj     "
-print "***************"
-print "Message        "
-print "---------------"
-print "num  : %d "%c.num
-print "text : %s "%c.text
-print
-print "Sender         "
-print "---------------"
-print "c.sender.userid   : %d "%c.sender.userid
-print "c.sender.username : %s "%c.sender.username
-print "Receiver       "
-print "---------------"
-print "c.receiver.userid   : %d "%c.receiver.userid
-print "c.receiver.username : %s "%c.receiver.username
-print
+print("JSON original")
+print("*************")
+print(json.dumps(doc, sort_keys=True, indent=2, separators=(',',': ')))
+print("")
+print("Python obj     ")
+print("***************")
+print("Message        ")
+print("---------------")
+print("num  : %d "%c.num)
+print("text : %s "%c.text)
+print("")
+print("Sender         ")
+print("---------------")
+print("c.sender.userid   : %d "%c.sender.userid)
+print("c.sender.username : %s "%c.sender.username)
+print("Receiver       ")
+print("---------------")
+print("c.receiver.userid   : %d "%c.receiver.userid)
+print("c.receiver.username : %s "%c.receiver.username)
+print("")
