@@ -24,7 +24,7 @@ import sys
 
 if sys.version_info > (3,):
 	long = int
-
+	unicode = str
 
 class Encoder(json.JSONEncoder):
 	""" class to handle ObjectId on a json document """
